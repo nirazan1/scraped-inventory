@@ -15,5 +15,4 @@ There are instructions for installing both Ruby and Node at the beginning of the
 ## Running
 
 - Start the Rails server and esbuild with one command `./bin/dev`
-- Hit http://localhost:3000/events/
 
