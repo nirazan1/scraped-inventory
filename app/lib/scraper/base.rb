@@ -10,7 +10,7 @@ module Scraper
       scrape
     end
 
-    def store!
+    def scrape_and_save!
       category = Category.find_or_create_by(name: scraped_data[:category])
       @product.categories << category
       scraped_data[:images].each do |image|
