@@ -35,6 +35,9 @@ gem "redis"
 # Simple, efficient background processing for Ruby
 gem 'sidekiq'
 
+# Redis-based simple locking mechanism for sidekiq.
+gem 'sidekiq-lock'
+
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 
