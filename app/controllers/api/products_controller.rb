@@ -5,7 +5,7 @@ class Api::ProductsController < ApplicationController
 
   def index
     @products = Product.all
-    render json: @products
+    render json: @products, methods: :product_images
   end
 
   def show

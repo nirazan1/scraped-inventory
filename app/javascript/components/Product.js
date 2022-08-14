@@ -41,6 +41,9 @@ const Product = ({ products, onDelete }) => {
         <li>
           <strong>Size:</strong> {product.size}
         </li>
+        <li>
+          {product.product_images && product.product_images.map(image => <img src={image} alt="product" />)}
+        </li>
       </ul>
     </div>
   );
@@ -56,6 +59,7 @@ Product.propTypes = {
       description: PropTypes.string,
       size: PropTypes.string,
       mobile_number: PropTypes.string,
+      product_images: PropTypes.array,
     })
   ).isRequired,
   onDelete: PropTypes.func.isRequired,
