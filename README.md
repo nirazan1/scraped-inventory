@@ -1,9 +1,10 @@
+React on Rails App to scrape data from sites like filpkart and show products sorted by category
+
 ## Requirements
 
 - [Ruby](https://www.ruby-lang.org/en/downloads/)
 - [Node.js](http://nodejs.org/)
-
-There are instructions for installing both Ruby and Node at the beginning of the tutorial.
+- [Redis](https://redis.io/)
 
 ## Installation
 
@@ -15,4 +16,6 @@ There are instructions for installing both Ruby and Node at the beginning of the
 ## Running
 
 - Start the Rails server and esbuild with one command `./bin/dev`
+- Start the Redis server with  `redis-server`
+- Start the Sidekiq with `sidekiq`
 
