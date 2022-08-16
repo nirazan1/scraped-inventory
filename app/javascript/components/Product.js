@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, NavLink } from 'react-router-dom';
 import ProductNotFound from './ProductNotFound';
 
 const Product = ({ products, onDelete }) => {
@@ -13,7 +13,7 @@ const Product = ({ products, onDelete }) => {
     <div className="productContainer">
       <h2>
         {product.title}
-        <Link to={`/products/${product.id}/edit`}>Edit</Link>
+        <NavLink to={`edit`}>Edit</NavLink>
         <button
           className="delete"
           type="button"
@@ -61,8 +61,7 @@ Product.propTypes = {
       mobile_number: PropTypes.string,
       product_images: PropTypes.array,
     })
-  ).isRequired,
-  onDelete: PropTypes.func.isRequired,
+  ).isRequired
 };
 
 export default Product;

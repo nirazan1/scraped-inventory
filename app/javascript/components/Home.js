@@ -3,25 +3,27 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import Header from './Header';
-import Product from './Product';
 import ProductForm from './ProductForm';
+import CategoryList from './CategoryList';
+import Category from './Category';
+import Product from './Product';
 import ProductList from './ProductList';
 import { success } from '../helpers/notifications';
 import { handleAjaxError } from '../helpers/helpers';
 
 const Editor = () => {
-  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await window.fetch('/api/products.json');
+        const response = await window.fetch('/api/categories.json');
         if (!response.ok) throw Error(response.statusText);
 
         const data = await response.json();
-        setProducts(data);
+        setCategories(data);
       } catch (error) {
         handleAjaxError(error);
       }
@@ -46,10 +48,10 @@ const Editor = () => {
       if (!response.ok) throw Error(response.statusText);
 
       const savedProduct = await response.json();
-      const newProducts = [...products, savedProduct];
-      setProducts(newProducts);
+      // const newProducts = [...products, savedProduct];
+      // setProducts(newProducts);
       success('Product Added!');
-      navigate(`/products/${savedProduct.id}`);
+      navigate('/categories');
     } catch (error) {
       handleAjaxError(error);
     }
@@ -67,8 +69,8 @@ const Editor = () => {
         if (!response.ok) throw Error(response.statusText);
 
         success('Product Deleted!');
-        navigate('/products');
-        setProducts(products.filter(product => product.id !== productId));
+        navigate('/categories');
+        // setProducts(products.filter(product => product.id !== productId));
       } catch (error) {
         handleAjaxError(error);
       }
@@ -91,13 +93,13 @@ const Editor = () => {
 
       if (!response.ok) throw Error(response.statusText);
 
-      const newProducts = products;
-      const idx = newProducts.findIndex((product) => product.id === updatedProduct.id);
-      newProducts[idx] = updatedProduct;
-      setProducts(newProducts);
+      // const newProducts = products;
+      // const idx = newProducts.findIndex((product) => product.id === updatedProduct.id);
+      // newProducts[idx] = updatedProduct;
+      // setProducts(newProducts);
 
       success('Product Updated!');
-      navigate(`/products/${updatedProduct.id}`);
+      navigate('/categories');
     } catch (error) {
       handleAjaxError(error);
     }
@@ -110,18 +112,9 @@ const Editor = () => {
         <p className='loading'>Loading...</p>
       ) : (
         <div className="grid">
-          <ProductList products={products} />
-
+          <CategoryList categories={categories} onSave={addProduct}/>
           <Routes>
-            <Route
-              path=":id"
-              element={<Product products={products} onDelete={deleteProduct} />}
-            />
-            <Route
-              path=":id/edit"
-              element={<ProductForm products={products} onSave={updateProduct} />}
-            />
-            <Route path="new" element={<ProductForm onSave={addProduct} />} />
+            <Route path=":id/*" element={<Category categories={categories} />} />
           </Routes>
         </div>
       )}

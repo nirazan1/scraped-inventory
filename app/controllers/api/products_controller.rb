@@ -5,18 +5,22 @@ class Api::ProductsController < ApplicationController
 
   def index
     @products = Product.all
-    render json: @products, methods: :product_images
+    render json: @products, :only => [:id, :url, :title]
   end
 
   def show
-    render json: @product
+    render json: @product, methods: :product_images, :include => {
+        :categories => {:only => [:id, :name]}
+      }, :except => [:created_at, :updated_at]
   end
 
   def create
     @product = Product.new(product_params)
 
     if @product.save
-      render json: @product, status: :created
+      render json: @product, :include => {
+          :categories => {:only => [:id, :name]}
+        }, :except => [:created_at, :updated_at] , status: :created
     else
       render json: @product.errors, status: :unprocessable_entity
     end

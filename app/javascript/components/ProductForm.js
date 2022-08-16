@@ -9,7 +9,6 @@ import 'pikaday/css/pikaday.css';
 
 const ProductForm = ({ products, onSave }) => {
   const { id } = useParams();
-
   const initialProductState = useCallback(
     () => {
       const defaults = {
@@ -70,33 +69,53 @@ const ProductForm = ({ products, onSave }) => {
       onSave(product);
     }
   };
-
-  const cancelURL = product.id ? `/products/${product.id}` : '/products';
+  const cancelURL = product.id ? window.location.pathname.replace('/edit', '') : '/categories';
 
   if (id && !product.id) return <ProductNotFound />;
 
   return (
     <div>
       {renderErrors()}
-
+      {product.id && <p>Editing: {product.title}</p>}
       <form className="productForm" onSubmit={handleSubmit}>
-        <div>
+        <div className="flex-container">
           <label htmlFor="url">
-            <strong>URL </strong>
             <input
               type="text"
               id="url"
               name="url"
+              placeholder="Input product URL"
               onChange={handleInputChange}
               value={product.url}
             />
           </label>
-        </div>
-        <div className="form-actions">
-          <button type="submit">Save</button>
-          <Link to={cancelURL}>Cancel</Link>
+          <button type="submit">{product.id ? 'Update' : 'Add'}</button>
+          {product.id &&<Link to={cancelURL}>Cancel</Link>}
         </div>
       </form>
+      {product.id && <ul>
+        <li>
+          <strong>URL:</strong> {product.url}
+        </li>
+        <li>
+          <strong>Title:</strong> {product.title}
+        </li>
+        <li>
+          <strong>Description:</strong> {product.description}
+        </li>
+        <li>
+          <strong>Price:</strong> {product.price}
+        </li>
+        <li>
+          <strong>Mobile Number:</strong> {product.mobile_number}
+        </li>
+        <li>
+          <strong>Size:</strong> {product.size}
+        </li>
+        <li>
+          {product.product_images && product.product_images.map(image => <img src={image} alt="product" />)}
+        </li>
+      </ul>}
     </div>
   );
 };

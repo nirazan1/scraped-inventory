@@ -1,27 +1,26 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, Routes, Route } from 'react-router-dom';
+import Product from './Product';
 
 const ProductList = ({ products }) => {
-
   const renderProducts = (productArray) =>
     productArray
       .map((product) => (
         <li key={product.id}>
-          <NavLink to={`/products/${product.id}`}>
-            {product.id} : {product.title}
-          </NavLink>
+          <Link to={`products/${product.id}`}>
+            {product.title}
+          </Link>
         </li>
       ));
 
   return (
-    <section className="productList">
-      <h2>
-        <Link to="/products/new">Add Product</Link>
-      </h2>
+    <div>
+      <section className="productList">
 
-      <ul>{renderProducts(products)}</ul>
-    </section>
+        <ul>{renderProducts(products)}</ul>
+      </section>
+    </div>
   );
 };
 
